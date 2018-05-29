@@ -3,21 +3,26 @@
 <head>
   <meta charset="utf-8">
   <title>amoCRM Backup</title>
+  <meta charset="utf-8">
   <meta name="description" content="Contacts & Companies">
   <meta name="author" content="AlekseiKhamidov">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/bootstrap-table.min.css">
-  [if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  [endif]
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-table.js"></script>
+  <script src="js/bootstrap-table-export.min.js"></script>
+  <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
 </head>
 
 <body>
-  <table id='tab'>
+  <table id='tab' data-show-export="true" data-toggle="table">
     <thead>
         <tr>
            <th data-field="id">ID</th>
            <th data-field="Наименование">Наименование</th>
-           <th data-field="Город">Город</th>
+           <th data-field="Город #1">Город</th>
            <th data-field="Телефон #1">Телефон #1</th>
            <th data-field="Телефон #2">Телефон #2</th>
            <th data-field="Телефон #3">Телефон #3</th>
@@ -36,9 +41,6 @@
    </thead>
   </table>
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/bootstrap-table.js"></script>
-  <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
   <script>
     $('#tab').bootstrapTable({
      url: "amocrm.php"
