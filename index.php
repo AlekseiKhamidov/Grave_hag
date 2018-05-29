@@ -11,20 +11,24 @@
       AMOCRM['login'],
       AMOCRM['hash']
     );
-
     echo "<pre>";
 
     $account = $amo->account;
-    // print_r($account->apiCurrent());
+    $accInfo = $account->apiCurrent();
+
+    // print_r($accInfo);
 
     $contact = $amo->contact;
     $allContacts = fetchEntities($contact);
+    foreach ($allContacts as $cont) {
+      print_r(getEntityInfo($cont, AMOCRM["contact_CFs"]));
+    }
 
     $company = $amo->company;
     $allCompanies = fetchEntities($company);
-
-
-    echo count($allContacts)." ".count($allCompanies);
+    foreach ($allCompanies as $comp) {
+      print_r(getEntityInfo($comp, AMOCRM["company_CFs"]));
+    }
 
     echo "</pre>";
   } catch (\AmoCRM\Exception $e) {

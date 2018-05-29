@@ -19,4 +19,19 @@
     return $entityList;
   }
 
+  function getEntityInfo($entity, $fields = []) {
+    $result['id'] = $entity['id'];
+    $result['Наименование'] = $entity["name"];
+    if (isset($entity['custom_fields']) && $entity['custom_fields'] && $fields) {
+      foreach ($fields as $id) {
+        $CFs = $entity['custom_fields'];
+        $key = array_search($id, array_column($CFs, 'id'));
+        if ($key !== false) {
+          $field = $CFs[$key];
+          $result[$field["name"]] = $field["values"][0]["value"];
+        }
+      }
+    }
+    return $result;
+  }
 ?>
