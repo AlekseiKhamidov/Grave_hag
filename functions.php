@@ -28,7 +28,10 @@
         $key = array_search($id, array_column($CFs, 'id'));
         if ($key !== false) {
           $field = $CFs[$key];
-          $result[$field["name"]] = $field["values"][0]["value"];
+          // $result[$field["name"]] = '';
+          foreach ($field["values"] as $key => $value) {
+              $result[$field["name"]." #".($key + 1)] = $value["value"];
+          }
         }
       }
     }
