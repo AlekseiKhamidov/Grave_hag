@@ -23,7 +23,8 @@
 
 <body>
   <div class="table-responsive">
-  <table id='tab' data-show-export="true" data-toggle="table">
+  <table id='tab' data-show-export="true" data-toggle="table"  data-icons-prefix="fa"
+               data-icons="icons">
 
   </table>
 </div>
@@ -52,12 +53,12 @@
    columns:getColumns()
   });
   $("#tab").on('post-body.bs.table', function (){
-
-      $("#tab tbody > tr > td").each(function(){
-        $(this).attr('data-toggle',"tooltip");
-        $(this).attr('title',$(this).text());
-        $(this).tooltip();
-      });
+   $('[data-toggle="popover"]').popover();
+      // $("#tab tbody > tr > td").each(function(){
+      //   $(this).attr('data-toggle',"tooltip");
+      //   $(this).attr('title',$(this).text());
+      //   $(this).tooltip();
+      // });
   });
 
   $(function () {

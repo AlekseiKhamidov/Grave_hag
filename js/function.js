@@ -19,6 +19,22 @@ function getColumns(){
             align: 'center',
             valign: 'middle',
             sortable: true
+      },
+      {
+            field: 'tel',
+            title: 'Телефон',
+            align: 'center',
+            valign: 'middle',
+            formatter:'telFormat'
+
+      },
+      {
+            field: 'email',
+            title: 'E-mail',
+            align: 'center',
+            valign: 'middle',
+            formatter:'emailFormat'
+
       }];
       Date.prototype.addDays = function(days) {
         var dat = new Date(this.valueOf());
@@ -43,3 +59,12 @@ function getColumns(){
   }
    return columns;
   };
+  function copyToClipboard(text) {
+      if (window.clipboardData) { // Internet Explorer
+          window.clipboardData.setData("Text", text);
+      } else {
+          unsafeWindow.netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+          const clipboardHelper = Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper);
+          clipboardHelper.copyString(text);
+      }
+  }
