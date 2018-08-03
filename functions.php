@@ -22,16 +22,15 @@
   function getEntityInfo($entity, $fields = []) {
     $result['id'] = $entity['id'];
     $result['Наименование'] = $entity["name"];
+    $result['Ответственный менеджер'] = $entity["responsible_user_id"];
     if (isset($entity['custom_fields']) && $entity['custom_fields'] && $fields) {
-      foreach ($fields as $id) {
-        $CFs = $entity['custom_fields'];
-        $key = array_search($id, array_column($CFs, 'id'));
-        if ($key !== false) {
-          $field = $CFs[$key];
-          // $result[$field["name"]] = '';
-          foreach ($field["values"] as $key => $value) {
-              $result[$field["name"]." #".($key + 1)] = $value["value"];
-          }
+       foreach ($fields as $id) {
+         $CFs = $entity['custom_fields'];
+         $key = array_search($id, array_column($CFs, 'id'));
+         if ($key !== false) {
+           $field = $CFs[$key];
+           // print_r($field);
+           $result[$field["name"]] = $field["values"][0]["value"];
         }
       }
     }

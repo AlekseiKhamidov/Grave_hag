@@ -18,22 +18,10 @@
         <tr>
            <th data-field="id">ID</th>
            <th data-field="Наименование">Наименование</th>
-           <th data-field="Город #1" data-formatter="clear">Город</th>
-           <th data-field="Телефон #1" data-formatter="clear">Телефон #1</th>
-           <th data-field="Телефон #2" data-formatter="clear">Телефон #2</th>
-           <th data-field="Телефон #3" data-formatter="clear">Телефон #3</th>
-           <th data-field="Телефон #4" data-formatter="clear">Телефон #4</th>
-           <th data-field="Телефон #5" data-formatter="clear">Телефон #5</th>
-           <th data-field="Телефон #6" data-formatter="clear">Телефон #6</th>
-           <th data-field="Телефон #7" data-formatter="clear">Телефон #7</th>
-           <th data-field="Телефон #8" data-formatter="clear">Телефон #8</th>
-           <th data-field="Телефон #9" data-formatter="clear">Телефон #9</th>
-           <th data-field="Email #1" data-formatter="clear">Email #1</th>
-           <th data-field="Email #2" data-formatter="clear">Email #2</th>
-           <th data-field="Email #3" data-formatter="clear">Email #3</th>
-           <th data-field="Email #4" data-formatter="clear">Email #4</th>
-           <th data-field="Email #5">Email #5</th>
-           <th data-field="Email #6">Email #6</th>
+           <th data-field="Ответственный менеджер" data-formatter="clear">Ответственный менеджер</th>
+           <th data-field="Телефон" data-formatter="clear">Телефон</th>
+           <th data-field="Описание" data-formatter="clear">Описание</th>
+
    </thead>
   </table>
 
