@@ -16,11 +16,13 @@
   <table id='tab' data-show-export="true" data-toggle="table">
     <thead>
         <tr>
-           <th data-field="id">ID</th>
-           <th data-field="Наименование">Наименование</th>
+           <th data-field="Время звонка">Время звонка</th>
+           <th data-field="Дата звонка">Дата звонка</th>
            <th data-field="Ответственный менеджер" data-formatter="clear">Ответственный менеджер</th>
-           <th data-field="Телефон" data-formatter="clear">Телефон</th>
-           <th data-field="Описание" data-formatter="clear">Описание</th>
+           <th data-field="Длительность звонка" data-formatter="clear">Длительность звонка</th>
+           <th data-field="Тип звонка" data-formatter="clear">Тип звонка</th>
+           <th data-field="Тип контакта" data-formatter="clear">Тип контакта</th>
+           <th data-field="element_id" data-formatter="clear">ID контакта</th>
 
    </thead>
   </table>

@@ -1,5 +1,6 @@
 {
     "require": {
-        "dotzero/amocrm": "^0.3.28"
+        "dotzero/amocrm": "^0.3.28",
+        "phpoffice/phpspreadsheet": "^1.3"
     }
 }

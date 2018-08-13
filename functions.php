@@ -1,15 +1,16 @@
 <?php
   require_once "vendor/autoload.php";
 
-  function fetchEntities($entity) {
+  function fetchEntities($entity, $params = []) {
     $i = 0;
+    // print_r(__FUNCTION__);
     $entityList = array();
     try {
       do {
-          $fetchedEntities = $entity->apiList([
+          $fetchedEntities = $entity->apiList(array_merge([
             'limit_rows' => 500,
             'limit_offset' => 500 * $i++
-          ]);
+          ], $params));
           $entityList = array_merge($entityList, $fetchedEntities);
           usleep(600);
       } while ($fetchedEntities);

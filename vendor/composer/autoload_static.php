@@ -7,6 +7,11 @@ namespace Composer\Autoload;
 class ComposerStaticInite30233999135f221674d2f1a4388b156
 {
     public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'Psr\\SimpleCache\\' => 16,
+            'PhpOffice\\PhpSpreadsheet\\' => 25,
+        ),
         'A' => 
         array (
             'AmoCRM\\' => 7,
@@ -14,6 +19,14 @@ class ComposerStaticInite30233999135f221674d2f1a4388b156
     );
 
     public static $prefixDirsPsr4 = array (
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'PhpOffice\\PhpSpreadsheet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
+        ),
         'AmoCRM\\' => 
         array (
             0 => __DIR__ . '/..' . '/dotzero/amocrm/src',
