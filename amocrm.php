@@ -3,10 +3,21 @@
   require_once "config.php";
   require_once "functions.php";
 
+  header('Content-Encoding: UTF-8');
+  header('Content-Type: text/csv; charset=utf-8' );
+  header(sprintf( 'Content-Disposition: attachment; filename=my-csv-%s.csv', date( 'dmY-His' ) ) );
+  header('Content-Transfer-Encoding: binary');
+  header('Expires: 0');
+  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+  header('Pragma: public');
+
   set_time_limit(0);  // global setting
   ini_set('memory_limit', '1024M'); // or you could use 1G
-  date_default_timezone_set('Asia/Yekaterinburg');
-  echo getAllCalls(true);
+  date_default_timezone_set('Etc/GMT-4');
+
+  getAllCalls();
+  // echo json_encode(getAllCalls());
+  // echo json_encode(array_slice($all, 0, count($all)/2));
   // echo getContactsAndCompanies(true);
   // test();
   //
@@ -57,17 +68,25 @@
 
       // echo count($allCalls);
 
+
+      $fp = fopen('php://output', 'w');
+      //This line is important:
+      fputs( $fp, "\xEF\xBB\xBF" ); // UTF-8 BOM !!!!!
+
       foreach ($allCalls as $call) {
-        $call['Время звонка'] = date('h:i:s', $call['date_create']);
-        $call['Дата звонка'] = date('d.m.Y', $call['date_create']);
-        $call['Ответственный менеджер'] = $users[array_search($call['created_user_id'], array_column($users, 'id'))]['name'];
-        $call['Длительность звонка'] = json_decode($call['text'], true)['DURATION'];
-        $call['Тип звонка'] = $call["note_type"] == 10 ? "Входящий" : "Исходящий";
-        $call['Тип контакта'] = $call["element_type"] == 1 ? "Контакт" : "Компания";
-
-
-        $result[] = $call;
+        $timestamp =$call['date_create'];
+        $callInfo['Время звонка'] = date('H:i:s', $timestamp);
+        $callInfo['Дата звонка'] = date('d-m-Y', $timestamp);
+        $callInfo['Ответственный менеджер'] = $users[array_search($call['created_user_id'], array_column($users, 'id'))]['name'];
+        $callInfo['Длительность звонка'] = json_decode($call['text'], true)['DURATION'];
+        $callInfo['Тип звонка'] = $call["note_type"] == 10 ? "Входящий" : "Исходящий";
+        $callInfo['Тип контакта'] = $call["element_type"] == 1 ? "Контакт" : "Компания";
+        $callInfo['ID'] = $call["element_id"];
+        fputcsv($fp, $callInfo);
+        // array_push($result, $callInfo);
       }
+
+      fclose($fp);
 
     } catch (\AmoCRM\Exception $e) {
           printf('Error (%d): %s' . PHP_EOL, $e->getCode(), $e->getMessage());
