@@ -3,35 +3,6 @@
   require_once "config.php";
   require_once "functions.php";
 
-  header('Content-Encoding: UTF-8');
-  header('Content-Type: text/csv; charset=utf-8' );
-  header(sprintf( 'Content-Disposition: attachment; filename=my-csv-%s.csv', date( 'dmY-His' ) ) );
-  header('Content-Transfer-Encoding: binary');
-  header('Expires: 0');
-  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-  header('Pragma: public');
-
-  set_time_limit(0);  // global setting
-  ini_set('memory_limit', '1024M'); // or you could use 1G
-  date_default_timezone_set('Etc/GMT-4');
-
-  getAllCalls();
-  // echo json_encode(getAllCalls());
-  // echo json_encode(array_slice($all, 0, count($all)/2));
-  // echo getContactsAndCompanies(true);
-  // test();
-  //
-  // function test() {
-  //   $amo = new \AmoCRM\Client(
-  //     AMOCRM['subdomain'],
-  //     AMOCRM['login'],
-  //     AMOCRM['hash']
-  //   );
-  //   $account = $amo->account;
-  //   $accInfo = $account->apiCurrent();
-  //
-  //   print_r($accInfo["users"]);
-  // }
 
   function getAllCalls($json = false) {
     try {
@@ -66,12 +37,9 @@
       ]));
       $result = [];
 
-      // echo count($allCalls);
-
-
-      $fp = fopen('php://output', 'w');
-      //This line is important:
-      fputs( $fp, "\xEF\xBB\xBF" ); // UTF-8 BOM !!!!!
+      // $fp = fopen('php://output', 'w');
+      // //This line is important:
+      // fputs( $fp, "\xEF\xBB\xBF" ); // UTF-8 BOM !!!!!
 
       foreach ($allCalls as $call) {
         $timestamp =$call['date_create'];
@@ -82,14 +50,14 @@
         $callInfo['Тип звонка'] = $call["note_type"] == 10 ? "Входящий" : "Исходящий";
         $callInfo['Тип контакта'] = $call["element_type"] == 1 ? "Контакт" : "Компания";
         $callInfo['ID'] = $call["element_id"];
-        fputcsv($fp, $callInfo);
-        // array_push($result, $callInfo);
+        $callInfo['Ссылка'] = 'https://aezcompany.amocrm.ru/'.($call["element_type"] == 1 ? 'contacts' : 'companies').'/detail/'.$call['element_id'];
+
+        array_push($result, $callInfo);
       }
 
-      fclose($fp);
-
+      // fclose($fp);
     } catch (\AmoCRM\Exception $e) {
-          printf('Error (%d): %s' . PHP_EOL, $e->getCode(), $e->getMessage());
+        printf('Error (%d): %s' . PHP_EOL, $e->getCode(), $e->getMessage());
     }
 
     return $json ? json_encode($result) : $result;
@@ -110,9 +78,12 @@
 
       $contact = $amo->contact;
       $allContacts = fetchEntities($contact);
+
       foreach ($allContacts as $cont) {
         $cont = getEntityInfo($cont, AMOCRM["contact_CFs"]);
         $cont['Ответственный менеджер'] = $users[array_search($cont['Ответственный менеджер'], array_column($users, 'id'))]['name'];
+        $cont['GMT'] = "";
+        $cont['Ссылка'] = 'https://aezcompany.amocrm.ru/contacts/detail/'.$cont['id'];
         $result[] = $cont;
       }
 
@@ -121,6 +92,8 @@
       foreach ($allCompanies as $comp) {
         $comp = getEntityInfo($comp, AMOCRM["company_CFs"]);
         $comp['Ответственный менеджер'] = $users[array_search($comp['Ответственный менеджер'], array_column($users, 'id'))]['name'];
+        if (!isset($comp['GMT'])) $comp['GMT'] = "";
+        $comp['Ссылка'] = 'https://aezcompany.amocrm.ru/companies/detail/'.$comp['id'];
         $result[] = $comp;
       }
     } catch (\AmoCRM\Exception $e) {

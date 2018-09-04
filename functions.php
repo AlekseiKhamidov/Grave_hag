@@ -1,6 +1,24 @@
 <?php
   require_once "vendor/autoload.php";
 
+  header('Content-Encoding: UTF-8');
+  header('Content-Type: text/csv; charset=utf-8' );
+  header(sprintf( 'Content-Disposition: attachment; filename=my-csv-%s.csv', date( 'dmY-His' ) ) );
+  header('Content-Transfer-Encoding: binary');
+  header('Expires: 0');
+  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+  header('Pragma: public');
+
+  function saveArrayToCSV($array = []) {
+    $fp = fopen('php://output', 'w');
+    //This line is important:
+    fputs( $fp, "\xEF\xBB\xBF" ); // UTF-8 BOM !!!!!
+    foreach ($array as $value) {
+      fputcsv($fp, $value);
+    }
+    fclose($fp);
+  }
+
   function fetchEntities($entity, $params = []) {
     $i = 0;
     // print_r(__FUNCTION__);
