@@ -19,6 +19,12 @@
     fclose($fp);
   }
 
+  function deleteLineBreaks($string) {
+    $string = str_replace("\n", "", $string);
+    $string = str_replace("\r", "", $string);
+    return $string;
+  }
+
   function fetchEntities($entity, $params = []) {
     $i = 0;
     // print_r(__FUNCTION__);
@@ -40,7 +46,7 @@
 
   function getEntityInfo($entity, $fields = []) {
     $result['id'] = $entity['id'];
-    $result['Наименование'] = $entity["name"];
+    $result['Наименование'] = deleteLineBreaks($entity["name"]);
     $result['Ответственный менеджер'] = $entity["responsible_user_id"];
     if (isset($entity['custom_fields']) && $entity['custom_fields'] && $fields) {
        foreach ($fields as $id) {

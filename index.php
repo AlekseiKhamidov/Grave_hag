@@ -3,6 +3,7 @@
   require_once "amocrm.php";
   require_once "functions.php";
 
-  saveArrayToCSV(getContactsAndCompanies());
+  // saveArrayToCSV(getContactsAndCompanies());
+  saveArrayToCSV(getAllCalls());
 
  ?>
